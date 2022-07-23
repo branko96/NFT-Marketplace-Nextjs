@@ -64,6 +64,7 @@ function NavBar() {
                 </>
             )}
 
+            <button onClick={() => disconnect()}>Disconnect</button>
             {address ? (<div>
                 Connected to {address}
                 <button onClick={() => disconnect()}>Disconnect</button>
