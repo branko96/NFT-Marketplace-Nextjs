@@ -3,6 +3,7 @@ import { ethers } from "ethers"
 import { useRouter } from "next/router";
 import { toast } from 'react-toastify';
 import nftHelper from "../utils/nftHelper"
+import {RPC_ADDRESS} from "../constants/rpcAddress";
 
 export default function Home() {
     const [nfts, setNfts] = useState([])
@@ -14,8 +15,8 @@ export default function Home() {
 
     async function loadNFTs() {
         // TODO: change address in testnet
-        // const provider = new ethers.providers.JsonRpcProvider("https://eth-ropsten.alchemyapi.io/v2/fwqsfpfhYaNJuhfwcqiRZoXj1eFSAdBg")
-        const provider = new ethers.providers.JsonRpcProvider()
+        const provider = new ethers.providers.JsonRpcProvider(RPC_ADDRESS)
+        // const provider = new ethers.providers.JsonRpcProvider()
         const nfts = await nftHelper.marketItems(provider)
         setNfts(nfts)
         setLoadingState('loaded')

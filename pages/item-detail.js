@@ -7,6 +7,7 @@ import {useAccount} from "wagmi";
 import {useContractsStore} from "../store";
 import {showError, showSuccess} from "../utils/toastHelper";
 import BidsList from "../components/BidsList";
+import {RPC_ADDRESS} from "../constants/rpcAddress";
 
 export default function ItemDetail() {
     const [item, setItem] = useState({})
@@ -24,7 +25,8 @@ export default function ItemDetail() {
                 return
             }
             // TODO: change to correct provider in testnet
-            const provider = new ethers.providers.JsonRpcProvider()
+            // const provider = new ethers.providers.JsonRpcProvider()
+            const provider = new ethers.providers.JsonRpcProvider(RPC_ADDRESS)
             await transactionsService.createBid(nftMarketContract, id, bidAmount)
             showSuccess("Bid created successfully")
             const itemBids = await nftHelper.getNftBids(id, provider)
@@ -39,7 +41,9 @@ export default function ItemDetail() {
         (async () => {
             try {
                 // TODO: change to correct provider in testnet
-                const provider = new ethers.providers.JsonRpcProvider()
+                //const provider = new ethers.providers.JsonRpcProvider()
+                const provider = new ethers.providers.JsonRpcProvider(RPC_ADDRESS)
+
                 if (!id) return
                 const itemObject = await nftHelper.getMarketItemById(id, provider)
                 const itemDetails = await nftHelper.getNftDetails(itemObject.tokenId, provider)
