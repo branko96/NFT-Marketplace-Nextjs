@@ -1,7 +1,7 @@
 import { ethers } from "ethers"
 import { nftAddress, nftMarketAddress } from "../config"
-import NFT from "../../artifacts/contracts/NFT.sol/NFT.json"
-import NFTMarket from "../../artifacts/contracts/NFTMarket.sol/NFTMarket.json"
+import NFT from "../artifacts/NFT.json"
+import NFTMarket from "../artifacts/NFTMarket.json"
 import axios from "axios"
 
 const loadNFTs = async (data, getTokenURI, nftContract) => {
