@@ -11,7 +11,7 @@ import NFTMarket from "../artifacts/NFTMarket.json";
 function NavBar() {
     const { address } = useAccount()
     const { connect } = useConnect({
-        connector: new InjectedConnector(),
+        connector: new InjectedConnector({ chains: [3], options: {} }),
     })
     const { disconnect } = useDisconnect()
     const {data: provider} = useSigner()
