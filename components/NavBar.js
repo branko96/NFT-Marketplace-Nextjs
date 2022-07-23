@@ -10,10 +10,11 @@ import NFTMarket from "../artifacts/NFTMarket.json";
 
 function NavBar() {
     const { address } = useAccount()
-    const { connect } = useConnect({
+    const { data, status, connect, error } = useConnect({
         chainId:3,
         connector: new InjectedConnector({ chains: [3], options: {} }),
     })
+    console.log(error, data, status);
     const { disconnect } = useDisconnect()
     const {data: provider} = useSigner()
     const setContracts = useContractsStore((state) => state.setContracts)
@@ -35,8 +36,12 @@ function NavBar() {
     }, [setContracts, nftMarketContract, nftContract, provider])
 
     const handleConnect = useCallback(async () => {
-        connect()
-        setContracts(nftMarketContract, nftContract)
+        try {
+            connect()
+            setContracts(nftMarketContract, nftContract)
+        }catch (e) {
+            console.log(e);
+        }
     }, [connect])
 
     return (    <nav className="border-b p-6">
