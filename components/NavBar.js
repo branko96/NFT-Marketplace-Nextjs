@@ -4,8 +4,8 @@ import {InjectedConnector} from "wagmi/connectors/injected";
 import {useContractsStore} from "../store";
 import {useCallback, useEffect} from "react";
 import {nftAddress, nftMarketAddress} from "../config";
-import NFT from "../../artifacts/contracts/NFT.sol/NFT.json";
-import NFTMarket from "../../artifacts/contracts/NFTMarket.sol/NFTMarket.json";
+import NFT from "../artifacts/NFT.json";
+import NFTMarket from "../artifacts/NFTMarket.json";
 
 
 function NavBar() {

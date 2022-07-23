@@ -1,11 +1,10 @@
 import "../styles/globals.css"
-import Link from "next/link"
-import {WagmiConfig, createClient, useAccount} from 'wagmi'
+import { WagmiConfig, createClient } from 'wagmi'
 import { getDefaultProvider } from 'ethers'
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "../components/NavBar";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 const client = createClient({
   autoConnect: true,
