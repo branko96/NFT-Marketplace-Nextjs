@@ -10,7 +10,7 @@ import NFTMarket from "../artifacts/NFTMarket.json";
 
 export const useIsMounted = () => {
     const [mounted, setMounted] = React.useState(false)
-    React.useEffect(() => setMounted(true), [])
+    useEffect(() => setMounted(true), [])
     return mounted
 }
 
