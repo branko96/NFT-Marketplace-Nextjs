@@ -7,15 +7,17 @@ import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
 import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
+import { MetaMaskConnector} from "wagmi/connectors/metaMask";
 import {InjectedConnector} from "wagmi/connectors/injected";
 
 const client = createClient({
   autoConnect: true,
-  connectors: [new InjectedConnector({ chains: [chain.ropsten] })]
+  connectors: [ new MetaMaskConnector({chains: [chain.ropsten]})],
   /*  provider: getDefaultProvider({
     rpcUrl: RPC_ADDRESS,
     chainId: 3
   }),*/
+
 })
 
 function MyApp({ Component, pageProps }) {
