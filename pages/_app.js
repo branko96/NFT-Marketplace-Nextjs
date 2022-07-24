@@ -1,15 +1,10 @@
 import "../styles/globals.css"
-import { WagmiConfig, createClient, chain } from 'wagmi'
+import { WagmiConfig } from 'wagmi'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
-import { MetaMaskConnector} from "wagmi/connectors/metaMask";
-
-const client = createClient({
-  autoConnect: true,
-  connectors: [ new MetaMaskConnector({chains: [chain.ropsten]})],
-})
+import { client } from "../utils/wagmiClient";
 
 function MyApp({ Component, pageProps }) {
   const [showing, setShowing] = useState(false);

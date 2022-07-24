@@ -62,8 +62,15 @@ const marketItems = async (provider) => {
 
 const myItems = async (nftMarketContract, nftContract) => {
     const data = await nftMarketContract.fetchMyNfts()
-
-    return loadNFTs(data, getTokenURI, nftContract)
+    const tokenIds = []
+    const filtered = data.filter(o => {
+        if (!tokenIds.includes(o.tokenId.toString())) {
+            tokenIds.push(o.tokenId.toString())
+            return true
+        }
+        return false
+    })
+    return loadNFTs(filtered, getTokenURI, nftContract)
 }
 
 const getMarketItemById = async (id, provider) => {
