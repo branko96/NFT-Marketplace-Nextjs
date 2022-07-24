@@ -7,9 +7,12 @@ import {nftAddress, nftMarketAddress} from "../config";
 import NFT from "../artifacts/NFT.json";
 import NFTMarket from "../artifacts/NFTMarket.json";
 import MetaMaskOnboarding from '@metamask/onboarding'
+import {useWeb3} from "@3rdweb/hooks";
 
 function NavBar() {
     const { address } = useAccount()
+    const { connectWallet, address: add, error: err } = useWeb3();
+    console.log(add, err);
     const { data, status, connect, error } = useConnect({
         chainId:3,
         connector: new InjectedConnector({ chains: [3], options: {} }),
@@ -81,7 +84,7 @@ function NavBar() {
                 <button onClick={() => disconnect()}>Disconnect</button>
             </div>) : (
                 <div>
-                    <button onClick={handleConnect}>Connect</button>
+                    <button onClick={() => connectWallet("injected")}>Connect</button>
                 </div>
             )}
         </div>

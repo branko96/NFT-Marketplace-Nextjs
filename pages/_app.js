@@ -9,6 +9,15 @@ import { alchemyProvider } from 'wagmi/providers/alchemy'
 import { publicProvider } from 'wagmi/providers/public'
 import { MetaMaskConnector} from "wagmi/connectors/metaMask";
 import {InjectedConnector} from "wagmi/connectors/injected";
+import { ThirdwebWeb3Provider } from "@3rdweb/hooks";
+
+import "regenerator-runtime/runtime";
+
+const supportedChainIds = [80001, 3];
+
+const connectors = {
+  injected: {},
+};
 
 const client = createClient({
   autoConnect: true,
@@ -33,9 +42,14 @@ function MyApp({ Component, pageProps }) {
 
     return <div>
       <WagmiConfig client={client}>
+        <ThirdwebWeb3Provider
+            supportedChainIds={supportedChainIds}
+            connectors={connectors}
+        >
         <ToastContainer/>
         <NavBar/>
         <Component {...pageProps} />
+        </ThirdwebWeb3Provider>
       </WagmiConfig>
     </div>
 }
