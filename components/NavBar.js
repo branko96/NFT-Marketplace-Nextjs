@@ -6,6 +6,7 @@ import {useCallback, useEffect} from "react";
 import {nftAddress, nftMarketAddress} from "../config";
 import NFT from "../artifacts/NFT.json";
 import NFTMarket from "../artifacts/NFTMarket.json";
+import {ethers} from "ethers";
 
 
 function NavBar() {
@@ -37,12 +38,15 @@ function NavBar() {
 
     const handleConnect = useCallback(async () => {
         try {
-            connect()
-            setContracts(nftMarketContract, nftContract)
+            window.ethereum?.request({ method: "eth_requestAccounts" }).then((accounts) => {
+                console.log(accounts);
+                connect()
+                setContracts(nftMarketContract, nftContract)
+            });
         }catch (e) {
             console.log(e);
         }
-    }, [connect])
+    }, [connect, setContracts, nftMarketContract, nftContract])
 
     return (    <nav className="border-b p-6">
         <p className="text-4xl font-bold">Marketplace NFT</p>
