@@ -8,20 +8,12 @@ import NFT from "../artifacts/NFT.json";
 import NFTMarket from "../artifacts/NFTMarket.json";
 
 
-export const useIsMounted = () => {
-    const [mounted, setMounted] = React.useState(false)
-    useEffect(() => setMounted(true), [])
-    return mounted
-}
-
 function NavBar() {
     const { address } = useAccount()
-    const isMounted = useIsMounted()
-    const [{ data, error }, connect] = useConnect()
-    /*const { data, status, connect, error } = useConnect({
-        chainId: 3,
+    const { data, status, connect, error } = useConnect({
+        chainId:3,
         connector: new InjectedConnector({ chains: [3], options: {} }),
-    })*/
+    })
     console.log(error, data, status);
     const { disconnect } = useDisconnect()
     const {data: provider} = useSigner()
@@ -72,7 +64,6 @@ function NavBar() {
                 </>
             )}
 
-            <button onClick={() => disconnect()}>Disconnect</button>
             {address ? (<div>
                 Connected to {address}
                 <button onClick={() => disconnect()}>Disconnect</button>
@@ -81,14 +72,6 @@ function NavBar() {
                     <button onClick={handleConnect}>Connect</button>
                 </div>
             )}
-            {data.connectors.map((x) => (
-                <button disabled={!x.ready} key={x.id} onClick={() => connect(x)}>
-                    {isMounted ? x.name : x.id === 'injected' ? x.id : x.name}
-                    {!x.ready && ' (unsupported)'}
-                </button>
-            ))}
-
-            {error && <div>{error?.message ?? 'Failed to connect'}</div>}
         </div>
     </nav>)
 }
