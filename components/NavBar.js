@@ -6,13 +6,10 @@ import {useCallback, useEffect} from "react";
 import {nftAddress, nftMarketAddress} from "../config";
 import NFT from "../artifacts/NFT.json";
 import NFTMarket from "../artifacts/NFTMarket.json";
-import MetaMaskOnboarding from '@metamask/onboarding'
-import {useWeb3} from "@3rdweb/hooks";
+import {useMoralis} from "react-moralis";
 
 function NavBar() {
     const { address } = useAccount()
-    const { connectWallet, address: add, error: err } = useWeb3();
-    console.log(add, err);
     const { data, status, connect, error } = useConnect({
         chainId:3,
         connector: new InjectedConnector({ chains: [3], options: {} }),
@@ -31,7 +28,7 @@ function NavBar() {
         contractInterface: NFTMarket.abi,
         signerOrProvider: provider
     })
-    const onboarding = new MetaMaskOnboarding();
+    const { authenticate } = useMoralis();
 
     useEffect(() => {
         if (nftContract.signer && nftMarketContract.signer) {
@@ -84,7 +81,7 @@ function NavBar() {
                 <button onClick={() => disconnect()}>Disconnect</button>
             </div>) : (
                 <div>
-                    <button onClick={() => connectWallet("injected")}>Connect</button>
+                    <button onClick={() => authenticate({provider: "metamask"})}>Connect</button>
                 </div>
             )}
         </div>

@@ -10,8 +10,7 @@ import { publicProvider } from 'wagmi/providers/public'
 import { MetaMaskConnector} from "wagmi/connectors/metaMask";
 import {InjectedConnector} from "wagmi/connectors/injected";
 import { ThirdwebWeb3Provider } from "@3rdweb/hooks";
-
-import "regenerator-runtime/runtime";
+import { MoralisProvider } from "react-moralis";
 
 const supportedChainIds = [80001, 3];
 
@@ -42,14 +41,15 @@ function MyApp({ Component, pageProps }) {
 
     return <div>
       <WagmiConfig client={client}>
-        <ThirdwebWeb3Provider
-            supportedChainIds={supportedChainIds}
-            connectors={connectors}
+
+        <MoralisProvider
+            appId={"AjSLgbd9PMFSsWK3tovfUqN2mOfXOQmEv3LXcCPb"}
+            serverUrl={"https://3be8vtjiu3ps.usemoralis.com:2053/server"}
         >
         <ToastContainer/>
         <NavBar/>
         <Component {...pageProps} />
-        </ThirdwebWeb3Provider>
+        </MoralisProvider>
       </WagmiConfig>
     </div>
 }
