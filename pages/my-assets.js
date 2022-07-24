@@ -1,10 +1,7 @@
 import {useCallback, useEffect, useState} from "react"
-import { ethers } from "ethers"
-import web3modal from "web3modal"
 import nftHelper from "../utils/nftHelper"
 import {useContractsStore} from "../store";
 import shallow from "zustand/shallow";
-import ipfsService from "../services/ipfsService";
 import transactionsService from "../services/transactionsService";
 import {showError, showSuccess} from "../utils/toastHelper";
 
