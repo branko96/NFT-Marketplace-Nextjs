@@ -6,8 +6,7 @@ import {useCallback, useEffect} from "react";
 import {nftAddress, nftMarketAddress} from "../config";
 import NFT from "../artifacts/NFT.json";
 import NFTMarket from "../artifacts/NFTMarket.json";
-import {ethers} from "ethers";
-
+import MetaMaskOnboarding from '@metamask/onboarding'
 
 function NavBar() {
     const { address } = useAccount()
@@ -29,6 +28,7 @@ function NavBar() {
         contractInterface: NFTMarket.abi,
         signerOrProvider: provider
     })
+    const onboarding = new MetaMaskOnboarding();
 
     useEffect(() => {
         if (nftContract.signer && nftMarketContract.signer) {
@@ -38,8 +38,16 @@ function NavBar() {
 
     const handleConnect = useCallback(async () => {
         try {
+            try {
+                // Will open the MetaMask UI
+                // You should disable this button while the request is pending!
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+            } catch (error) {
+                console.error(error);
+            }
             window.ethereum?.request({ method: "eth_requestAccounts" }).then((accounts) => {
                 console.log(accounts);
+
                 connect()
                 setContracts(nftMarketContract, nftContract)
             });
