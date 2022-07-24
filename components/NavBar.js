@@ -6,17 +6,15 @@ import {useCallback, useEffect} from "react";
 import {nftAddress, nftMarketAddress} from "../config";
 import NFT from "../artifacts/NFT.json";
 import NFTMarket from "../artifacts/NFTMarket.json";
-import {useMoralis} from "react-moralis";
 
 function NavBar() {
     const { address } = useAccount()
-    const { data, status, connect, error } = useConnect({
-        chainId:3,
+    const { connect } = useConnect({
+        chainId: 3,
         connector: new InjectedConnector({ chains: [3], options: {} }),
     })
-    console.log(error, data, status);
     const { disconnect } = useDisconnect()
-    const {data: provider} = useSigner()
+    const { data: provider } = useSigner()
     const setContracts = useContractsStore((state) => state.setContracts)
     const nftContract = useContract({
         addressOrName: nftAddress,
@@ -28,7 +26,6 @@ function NavBar() {
         contractInterface: NFTMarket.abi,
         signerOrProvider: provider
     })
-    const { authenticate } = useMoralis();
 
     useEffect(() => {
         if (nftContract.signer && nftMarketContract.signer) {
@@ -38,20 +35,11 @@ function NavBar() {
 
     const handleConnect = useCallback(async () => {
         try {
-            try {
-                // Will open the MetaMask UI
-                // You should disable this button while the request is pending!
-                await window.ethereum.request({ method: 'eth_requestAccounts' });
-            } catch (error) {
-                console.error(error);
-            }
             window.ethereum?.request({ method: "eth_requestAccounts" }).then((accounts) => {
-                console.log(accounts);
-
                 connect()
                 setContracts(nftMarketContract, nftContract)
             });
-        }catch (e) {
+        } catch (e) {
             console.log(e);
         }
     }, [connect, setContracts, nftMarketContract, nftContract])
@@ -75,13 +63,14 @@ function NavBar() {
                     </Link>
                 </>
             )}
-
-            {address ? (<div>
-                Connected to {address}
-                <button onClick={() => disconnect()}>Disconnect</button>
-            </div>) : (
+            {address ? (
                 <div>
-                    <button onClick={() => authenticate({provider: "metamask"})}>Connect</button>
+                    Connected to {address}
+                    <button onClick={() => disconnect()}>Disconnect</button>
+                </div>
+            ) : (
+                <div>
+                    <button onClick={handleConnect}>Connect</button>
                 </div>
             )}
         </div>
